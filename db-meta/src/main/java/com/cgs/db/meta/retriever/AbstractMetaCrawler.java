@@ -175,19 +175,19 @@ public abstract class AbstractMetaCrawler implements MetaCrawler {
 			Privilege p = crawlPrivilge(tableName, schemaInfo);
 			table.setPrivilege(p);
 		}
-		
+
 		//crawl index
 		if(level.isRetrieveIndexInformation()){
 			Map<String, Index> indexs=crawlIndex(tableName, schemaInfo);
 			table.setIndexs(indexs);
 		}
-		
+
 		//crawl constraint
 		if(level.isRetrieveTableConstraintInformation()){
 			Map<String, Constraint> constraints=crawlConstraint(tableName, schemaInfo);
 			table.setConstraints(constraints);
 		}
-		
+
 		//craw trigger
 		if(level.isRetrieveTriggerInformation()){
 			Map<String, Trigger> triggers=crawleTriggers(tableName, schemaInfo);
@@ -199,7 +199,7 @@ public abstract class AbstractMetaCrawler implements MetaCrawler {
 
 	/**
 	 * getting the table's column
-	 * 
+	 *
 	 * @param tableName
 	 * @return
 	 */
@@ -381,7 +381,7 @@ public abstract class AbstractMetaCrawler implements MetaCrawler {
 					i.setPages(page);
 					i.setColumnNames(new ArrayList<String>());
 					indexs.put(name, i);
-					
+
 				}
 				String columnName=rs.getString("COLUMN_NAME");
 				i.getColumnNames().add(columnName);
@@ -395,10 +395,10 @@ public abstract class AbstractMetaCrawler implements MetaCrawler {
 		return indexs;
 
 	}
-	
+
 	protected abstract Map<String, Constraint> crawlConstraint(String tableName, SchemaInfo schemaInfo);
-	
-	
+
+
 
 	protected ForeignKeyColumnReference packForeignKeyColumnReference(ResultSet rs) throws SQLException {
 		String pk_cat = rs.getString("PKTABLE_CAT");
@@ -409,7 +409,7 @@ public abstract class AbstractMetaCrawler implements MetaCrawler {
 		String fk_cat = rs.getString("FKTABLE_CAT");
 		String fk_schema = rs.getString("FKTABLE_SCHEM");
 		String fk_table = rs.getString("FKTABLE_NAME");
-		String fk_column = rs.getString("PKCOLUMN_NAME");
+		String fk_column = rs.getString("FKCOLUMN_NAME");
 
 		int keySeq = rs.getInt("KEY_SEQ");
 
@@ -420,9 +420,9 @@ public abstract class AbstractMetaCrawler implements MetaCrawler {
 
 		return foreignKeyColumnReference;
 	}
-	
+
 	protected abstract Map<String, Trigger> crawleTriggers(String tableName,SchemaInfo schemaInfo);
-	
+
 	protected Map<String, Trigger> crawlerTriggers(String tableName){
 		return crawleTriggers(tableName,null);
 	}
